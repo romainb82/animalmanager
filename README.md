@@ -41,7 +41,6 @@ AnimalManager est un module PrestaShop 8.2+ développé pour permettre une gesti
 
 ## 🛡️ Sécurité & Conformité
 
-- CSRF token actif sur toutes les suppressions
 - Méthodes HTTP respectées (POST pour delete)
 - Pas d’override, pas de legacy : **architecture propre Symfony Grid**
 
