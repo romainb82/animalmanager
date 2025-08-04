@@ -1,0 +1,61 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Animalmanager\Grid\Definition\Factory\AnimalBreedGridDefinitionFactory:
+    arguments:
+      $translator: '@translator'
+      $hookDispatcher: '@prestashop.core.hook.dispatcher'
+    tags:
+      - { name: 'prestashop.core.grid.definition_factory', grid_id: 'animal_breed' }
+
+  Animalmanager\Grid\Query\AnimalBreedQueryBuilder:
+    arguments:
+      $connection: '@doctrine.dbal.default_connection'
+
+  Animalmanager\Grid\Data\AnimalBreedGridDataFactory:
+    arguments:
+      $queryBuilder: '@Animalmanager\Grid\Query\AnimalBreedQueryBuilder'
+
+  Animalmanager\Grid\Factory\AnimalBreedGridFactory:
+    arguments:
+      $definitionFactory: '@Animalmanager\Grid\Definition\Factory\AnimalBreedGridDefinitionFactory'
+      $dataFactory: '@Animalmanager\Grid\Data\AnimalBreedGridDataFactory'
+      $formFactory: '@form.factory'
+
+  Animalmanager\Controller\Admin\AdminAnimalBreedController:
+    arguments:
+      $gridFactory: '@Animalmanager\Grid\Factory\AnimalBreedGridFactory'
+      $gridPresenter: '@prestashop.core.grid.presenter.grid_presenter'
+    public: true
+
+#############################
+
+  Animalmanager\Grid\Definition\Factory\AnimalTypeGridDefinitionFactory:
+    arguments:
+      $translator: '@translator'
+      $hookDispatcher: '@prestashop.core.hook.dispatcher'
+    tags:
+      - { name: 'prestashop.core.grid.definition_factory', grid_id: 'animal_type' }
+
+  Animalmanager\Grid\Query\AnimalTypeQueryBuilder:
+    arguments:
+      $connection: '@doctrine.dbal.default_connection'
+
+  Animalmanager\Grid\Data\AnimalTypeGridDataFactory:
+    arguments:
+      $queryBuilder: '@Animalmanager\Grid\Query\AnimalTypeQueryBuilder'
+
+  Animalmanager\Grid\Factory\AnimalTypeGridFactory:
+    arguments:
+      $definitionFactory: '@Animalmanager\Grid\Definition\Factory\AnimalTypeGridDefinitionFactory'
+      $dataFactory: '@Animalmanager\Grid\Data\AnimalTypeGridDataFactory'
+      $formFactory: '@form.factory'
+
+  Animalmanager\Controller\Admin\AdminAnimalTypeController:
+    arguments:
+      $gridFactory: '@Animalmanager\Grid\Factory\AnimalTypeGridFactory'
+      $gridPresenter: '@prestashop.core.grid.presenter.grid_presenter'
+    public: true

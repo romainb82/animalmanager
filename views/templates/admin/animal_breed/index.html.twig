@@ -1,0 +1,103 @@
+{% extends '@PrestaShop/Admin/layout.html.twig' %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h3 class="card-header-title">
+      {{ 'Gestion des races d\'animaux'|trans({}, 'Modules.Animalmanager.Admin') }}
+    </h3>
+    <a href="{{ path('admin_animal_breed_add') }}" class="btn btn-primary">
+      {{ 'Ajouter une race'|trans({}, 'Modules.Animalmanager.Admin') }}
+    </a>
+  </div>
+  <div class="card-body">
+    <form method="post" action="{{ path('admin_animal_breed_bulk_delete') }}" id="bulk-delete-form">
+      <table class="table">
+        <thead>
+          <tr>
+            <th><input type="checkbox" onclick="toggleCheckboxes(this)"></th>
+            {% for column in grid.columns %}
+              <th>{{ column.name }}</th>
+            {% endfor %}
+            <th>{{ 'Actions'|trans({}, 'Admin.Global') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for record in grid.data.records %}
+            <tr class="clickable-row">
+              <td>
+                <input type="checkbox" name="breed_ids[]" value="{{ record.id_animal_breed }}">
+              </td>
+              {% for column in grid.columns %}
+                <td>
+                  {% if column.type == 'toggle' %}
+                    <button type="button"
+                            class="btn btn-link p-0"
+                            onclick="submitToggle({{ attribute(record, column.options.primary_field) }}, '{{ path(column.options.route, { (column.options.route_param_name): attribute(record, column.options.primary_field) }) }}', '{{ csrf_token('animal_breed_toggle_' ~ attribute(record, column.options.primary_field)) }}')"
+                            title="Activer / Désactiver">
+                      {% if attribute(record, column.options.field) %}
+                        ✅
+                      {% else %}
+                        ❌
+                      {% endif %}
+                    </button>
+                  {% else %}
+                    {{ attribute(record, column.options.field) }}
+                  {% endif %}
+                </td>
+              {% endfor %}
+              <td>
+                <a href="{{ path('admin_animal_breed_edit', { id: record.id_animal_breed }) }}">✏️</a>
+                <a href="{{ path('admin_animal_breed_delete', { id: record.id_animal_breed }) }}"
+                   onclick="return confirm('Supprimer cette race ?');">🗑️</a>
+              </td>
+            </tr>
+          {% else %}
+            <tr>
+              <td colspan="{{ grid.columns|length + 2 }}" class="text-center">
+                {{ 'Aucune race trouvée'|trans({}, 'Modules.Animalmanager.Admin') }}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <input type="hidden" name="_token" value="{{ csrf_token('animal_breed_bulk_delete') }}">
+
+      <button type="submit" class="btn btn-danger mt-2"
+              onclick="return confirm('Supprimer les races sélectionnées ?');">
+        {{ 'Supprimer la sélection'|trans({}, 'Modules.Animalmanager.Admin') }}
+      </button>
+    </form>
+
+    {# Form toggle unique global (envoyé dynamiquement via JS) #}
+    <form id="toggle-form" method="post" style="display: none;">
+      <input type="hidden" name="_token" id="toggle-token">
+    </form>
+  </div>
+</div>
+
+<script>
+function toggleCheckboxes(source) {
+  const checkboxes = document.querySelectorAll('input[name="breed_ids[]"]');
+  checkboxes.forEach(cb => cb.checked = source.checked);
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('tr.clickable-row').forEach(function (row) {
+    row.addEventListener('click', function (e) {
+      if (e.target.closest('a, button, input, form')) return;
+      const checkbox = this.querySelector('input[type="checkbox"]');
+      if (checkbox) checkbox.checked = !checkbox.checked;
+    });
+  });
+});
+
+function submitToggle(id, url, token) {
+  const form = document.getElementById('toggle-form');
+  form.action = url;
+  document.getElementById('toggle-token').value = token;
+  form.submit();
+}
+</script>
+{% endblock %}

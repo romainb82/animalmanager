@@ -1,0 +1,24 @@
+{% extends '@PrestaShop/Admin/layout.html.twig' %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-header-title">{{ 'Modifier le type d\'animal'|trans({}, 'Modules.Animalmanager.Admin') }}</h3>
+  </div>
+  <div class="card-body">
+    <form method="post">
+      <div class="form-group">
+        <label for="type_name">{{ 'Nom du type'|trans({}, 'Modules.Animalmanager.Admin') }}</label>
+        <input type="text" name="name" id="type_name" class="form-control" value="{{ type.name }}" required>
+      </div>
+
+      <button type="submit" class="btn btn-success mt-3">
+        {{ 'Enregistrer'|trans({}, 'Modules.Animalmanager.Admin') }}
+      </button>
+      <a href="{{ path('admin_animal_type_index') }}" class="btn btn-secondary mt-3">
+        {{ 'Annuler'|trans({}, 'Modules.Animalmanager.Admin') }}
+      </a>
+    </form>
+  </div>
+</div>
+{% endblock %}

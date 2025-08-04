@@ -1,0 +1,73 @@
+###########################
+#Admin Animal Breed Routes
+###########################
+admin_animal_breed_index:
+  path: /animal-breed
+  methods: [GET]
+  defaults:
+    _controller: 'Animalmanager\Controller\Admin\AdminAnimalBreedController::index'
+    _legacy_controller: 'AdminAnimalBreed'
+    _legacy_link: 'AdminAnimalBreed'
+
+admin_animal_breed_add:
+  path: /animal-breed/add
+  methods: [GET, POST]
+  defaults:
+    _controller: 'Animalmanager\Controller\Admin\AdminAnimalBreedController::add'
+
+admin_animal_breed_toggle:
+  path: /modules/animal-breed/toggle/{id}
+  methods: [POST]
+  defaults:
+    _controller: 'Animalmanager\Controller\Admin\AdminAnimalBreedController::toggle'
+
+admin_animal_breed_bulk_delete:
+  path: /modules/animal-breed/bulk-delete
+  methods: [POST]
+  defaults:
+    _controller: 'Animalmanager\Controller\Admin\AdminAnimalBreedController::bulkDelete'
+
+admin_animal_breed_edit:
+  path: /modules/animal-breed/edit/{id}
+  methods: [GET, POST]
+  defaults:
+    _controller: 'Animalmanager\Controller\Admin\AdminAnimalBreedController::edit'
+
+admin_animal_breed_delete:
+  path: /modules/animal-breed/delete/{id}
+  methods: [GET, POST]
+  defaults:
+    _controller: 'Animalmanager\Controller\Admin\AdminAnimalBreedController::delete'
+
+
+###########################
+#Admin Animal Type Routes
+###########################
+admin_animal_type_index:
+  path: /modules/animal-type
+  methods: [GET]
+  defaults:
+    _controller: 'Animalmanager\Controller\Admin\AdminAnimalTypeController::index'
+    _legacy_controller: 'AdminAnimalType'
+    _legacy_link: 'AdminAnimalType'
+
+admin_animal_type_add:
+  path: /modules/animal-type/add
+  methods: [GET, POST]
+  defaults:
+    _controller: 'Animalmanager\Controller\Admin\AdminAnimalTypeController::add'
+    _legacy_controller: 'AdminAnimalType'
+
+admin_animal_type_edit:
+  path: /modules/animal-type/edit/{id}
+  methods: [GET, POST]
+  defaults:
+    _controller: 'Animalmanager\Controller\Admin\AdminAnimalTypeController::edit'
+    _legacy_controller: 'AdminAnimalType'
+
+admin_animal_type_delete:
+  path: /modules/animal-type/delete-type/{id}
+  methods: [GET, POST]
+  defaults:
+    _controller: 'Animalmanager\Controller\Admin\AdminAnimalTypeController::delete'
+    _legacy_controller: 'AdminAnimalType'
